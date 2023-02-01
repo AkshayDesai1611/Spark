@@ -1,4 +1,5 @@
 # Case.csv file
+# 1 - Read the data, show it and Count the number of records.
 >>> df_case = spark.read.option("header",True).csv("/input_data/Case.csv")
 >>> df_case.show()
 +--------+--------+---------------+-----+--------------------+---------+---------+----------+
