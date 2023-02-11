@@ -203,7 +203,32 @@ only showing top 20 rows
 |                 etc|      747|
 +--------------------+---------+
 
->>> 
+>>> case_df.sort(col("confirmed")).show()
++--------+-----------------+---------------+-----+--------------------+---------+---------+----------+
+| case_id|         province|           city|group|      infection_case|confirmed| latitude| longitude|
++--------+-----------------+---------------+-----+--------------------+---------+---------+----------+
+| 7000002|          Jeju-do|           null|false|contact with patient|        0|     null|      null|
+| 3000007|       Gangwon-do|           null|false|contact with patient|        0|     null|      null|
+| 1000030|            Seoul|     Gangseo-gu| true|SJ Investment Cal...|        0|37.559649|126.835102|
+| 1100007|            Busan|from other city| true|Cheongdo Daenam H...|        1|     null|      null|
+| 5000003|     Jeollabuk-do|from other city| true|  Shincheonji Church|        1|     null|      null|
+| 1000028|            Seoul|from other city| true|Anyang Gunpo Past...|        1|     null|      null|
+| 1000025|            Seoul|     Gangnam-gu| true|Gangnam Dongin Ch...|        1|37.522331|127.057388|
+| 1700003|           Sejong|from other city| true|  Shincheonji Church|        1|     null|      null|
+| 5100002|     Jeollanam-do|from other city| true|  Shincheonji Church|        1|     null|      null|
+| 7000004|          Jeju-do|from other city| true|       Itaewon Clubs|        1|     null|      null|
+| 1000019|            Seoul|from other city| true|Daejeon door-to-d...|        1|     null|      null|
+| 1000034|            Seoul|           null| true|         Orange Life|        1|     null|      null|
+| 1700006|           Sejong|           null|false|                 etc|        1|     null|      null|
+| 1300005|          Gwangju|           null|false|                 etc|        1|     null|      null|
+| 1200006|            Daegu|from other city| true|       Itaewon Clubs|        2|     null|      null|
+| 1200007|            Daegu|from other city| true|Cheongdo Daenam H...|        2|     null|      null|
+| 1400004|          Incheon|from other city| true|  Shincheonji Church|        2|     null|      null|
+| 1000033|            Seoul|from other city| true|Uiwang Logistics ...|        2|     null|      null|
+| 1500006|          Daejeon|from other city| true|  Shincheonji Church|        2|     null|      null|
+| 4000003|Chungcheongbuk-do|from other city| true| Guro-gu Call Center|        2|     null|      null|
++--------+-----------------+---------------+-----+--------------------+---------+---------+----------+
+only showing top 20 rows
 
 
 
