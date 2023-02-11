@@ -1,1 +1,110 @@
+# Collect your data as a pyspark dataframe and perform different
+operations
+>>> from pyspark.sql.types import StructType,StructField, StringType, IntegerType , DecimalType , BooleanType , FloatType
+>>> case_list = [(1000001,"Seoul","Yongsan-gu","TRUE","Itaewon Clubs",139,37.5386,126.9927)]
+>>> schema_list = StructType[( \
+... StructField("case_id",IntegerType(),True),
+... StructField("province",StringType(),True),
+... StructField("city",StringType(),True),
+... StructField("group",StringType(),True),
+... StructField("infection_case",StringType(),True),
+... StructField("confirmed",IntegerType(),True),
+... StructField("latitude",FloatType(),True),
+... StructField("longitude",FloatType(),True)
+... )]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'type' object is not subscriptable
+>>> schema_list = StructType([
+... StructField("case_id",IntegerType(),True),
+... StructField("province",StringType(),True),
+... StructField("city",StringType(),True),
+... StructField("group",StringType(),True),
+... StructField("infection_case",StringType(),True),
+... StructField("confirmed",IntegerType(),True),
+... StructField("latitude",FloatType(),True),
+... StructField("longitude",FloatType(),True),
+... ])
+>>> df_Case = spark.createDataFrame(data = case_list,schema = schema_list)
+>>> df_Case.show()
++-------+--------+----------+-----+--------------+---------+--------+---------+ 
+|case_id|province|      city|group|infection_case|confirmed|latitude|longitude|
++-------+--------+----------+-----+--------------+---------+--------+---------+
+|1000001|   Seoul|Yongsan-gu| TRUE| Itaewon Clubs|      139| 37.5386| 126.9927|
++-------+--------+----------+-----+--------------+---------+--------+---------+
+
+#a Read the data, show it and Count the number of records.
+>>> case_df = spark.read.option("header",True).option("inferSchema",True).csv("/input_data/Case.csv")
+>>> case_df.show()
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+| case_id|province|           city|group|      infection_case|confirmed| latitude| longitude|
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+| 1000001|   Seoul|     Yongsan-gu| true|       Itaewon Clubs|      139|    37.53|    126.99|
+| 1000002|   Seoul|      Gwanak-gu| true|             Richway|      119| 37.48208|126.901384|
+| 1000003|   Seoul|        Guro-gu| true| Guro-gu Call Center|       95|37.508163|126.884387|
+| 1000004|   Seoul|   Yangcheon-gu| true|Yangcheon Table T...|       43|37.546061|126.874209|
+| 1000005|   Seoul|      Dobong-gu| true|     Day Care Center|       43|37.679422|127.044374|
+| 1000006|   Seoul|        Guro-gu| true|Manmin Central Ch...|       41|37.481059|126.894343|
+| 1000007|   Seoul|from other city| true|SMR Newly Planted...|       36|     null|      null|
+| 1000008|   Seoul|  Dongdaemun-gu| true|       Dongan Church|       17|37.592888|127.056766|
+| 1000009|   Seoul|from other city| true|Coupang Logistics...|       25|     null|      null|
+| 1000010|   Seoul|      Gwanak-gu| true|     Wangsung Church|       30|37.481735|126.930121|
+| 1000011|   Seoul|   Eunpyeong-gu| true|Eunpyeong St. Mar...|       14| 37.63369|  126.9165|
+| 1000012|   Seoul|   Seongdong-gu| true|    Seongdong-gu APT|       13| 37.55713|  127.0403|
+| 1000013|   Seoul|      Jongno-gu| true|Jongno Community ...|       10| 37.57681|   127.006|
+| 1000014|   Seoul|     Gangnam-gu| true|Samsung Medical C...|        7| 37.48825| 127.08559|
+| 1000015|   Seoul|        Jung-gu| true|Jung-gu Fashion C...|        7|37.562405|126.984377|
+| 1000016|   Seoul|   Seodaemun-gu| true|  Yeonana News Class|        5|37.558147|126.943799|
+| 1000017|   Seoul|      Jongno-gu| true|Korea Campus Crus...|        7|37.594782|126.968022|
+| 1000018|   Seoul|     Gangnam-gu| true|Gangnam Yeoksam-d...|        6|     null|      null|
+| 1000019|   Seoul|from other city| true|Daejeon door-to-d...|        1|     null|      null|
+| 1000020|   Seoul|   Geumcheon-gu| true|Geumcheon-gu rice...|        6|     null|      null|
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+only showing top 20 rows
+
+>>> case_df.count()
+174
+
+>>> case_df.describe()
+DataFrame[summary: string,  case_id: string, province: string, city: string, infection_case: string, confirmed: string, latitude: string, longitude: string]
+
+>>> case_df.dropDuplicates().show()
++--------+-----------------+---------------+-----+--------------------+---------+----------+-----------+
+| case_id|         province|           city|group|      infection_case|confirmed|  latitude|  longitude|
++--------+-----------------+---------------+-----+--------------------+---------+----------+-----------+
+| 1000004|            Seoul|   Yangcheon-gu| true|Yangcheon Table T...|       43| 37.546061| 126.874209|
+| 1000021|            Seoul|from other city| true|  Shincheonji Church|        8|      null|       null|
+| 1300001|          Gwangju|        Dong-gu| true|  Gwangneuksa Temple|        5| 35.136035| 126.956405|
+| 1000007|            Seoul|from other city| true|SMR Newly Planted...|       36|      null|       null|
+| 1000019|            Seoul|from other city| true|Daejeon door-to-d...|        1|      null|       null|
+| 1400003|          Incheon|from other city| true| Guro-gu Call Center|       20|      null|       null|
+| 2000007|      Gyeonggi-do|from other city| true|  Shincheonji Church|       29|      null|       null|
+| 3000006|       Gangwon-do|           null|false|     overseas inflow|       16|      null|       null|
+| 6100008| Gyeongsangnam-do|from other city| true|       Itaewon Clubs|        2|      null|       null|
+| 1000006|            Seoul|        Guro-gu| true|Manmin Central Ch...|       41| 37.481059| 126.894343|
+| 1000029|            Seoul|     Gangnam-gu| true|Samsung Fire & Ma...|        4| 37.498279| 127.030139|
+| 6000009| Gyeongsangbuk-do|   Gyeongsan-si| true|Gyeongsan Cham Jo...|       16|  35.82558|   128.7373|
+| 3000001|       Gangwon-do|from other city| true|  Shincheonji Church|       17|      null|       null|
+| 1000028|            Seoul|from other city| true|Anyang Gunpo Past...|        1|      null|       null|
+| 1500003|          Daejeon|         Seo-gu| true|         Orange Town|        7|36.3398739|127.3819744|
+| 2000008|      Gyeonggi-do|from other city| true|Yangcheon Table T...|       28|      null|       null|
+| 4100004|Chungcheongnam-do|from other city| true|             Richway|        3|      null|       null|
+| 2000012|      Gyeonggi-do|       Suwon-si| true|Lotte Confectione...|       15| 37.287356| 127.013827|
+| 6000005| Gyeongsangbuk-do|from other city| true|Pilgrimage to Israel|       41|      null|       null|
+| 1400006|          Incheon|           null|false|contact with patient|        6|      null|       null|
++--------+-----------------+---------------+-----+--------------------+---------+----------+-----------+
+only showing top 20 rows
+
+>>> case_df.limit(5).show()
++--------+--------+------------+-----+--------------------+---------+---------+----------+
+| case_id|province|        city|group|      infection_case|confirmed| latitude| longitude|
++--------+--------+------------+-----+--------------------+---------+---------+----------+
+| 1000001|   Seoul|  Yongsan-gu| true|       Itaewon Clubs|      139|    37.53|    126.99|
+| 1000002|   Seoul|   Gwanak-gu| true|             Richway|      119| 37.48208|126.901384|
+| 1000003|   Seoul|     Guro-gu| true| Guro-gu Call Center|       95|37.508163|126.884387|
+| 1000004|   Seoul|Yangcheon-gu| true|Yangcheon Table T...|       43|37.546061|126.874209|
+| 1000005|   Seoul|   Dobong-gu| true|     Day Care Center|       43|37.679422|127.044374|
++--------+--------+------------+-----+--------------------+---------+---------+----------+
+
+>>> 
 
