@@ -108,3 +108,103 @@ only showing top 20 rows
 
 >>> 
 
+>>> case_df.select("province","group").show()
++--------+-----+
+|province|group|
++--------+-----+
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
+|   Seoul| true|
++--------+-----+
+only showing top 20 rows
+
+>>> case_df.na.drop().show()
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+| case_id|province|           city|group|      infection_case|confirmed| latitude| longitude|
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+| 1000001|   Seoul|     Yongsan-gu| true|       Itaewon Clubs|      139|    37.53|    126.99|
+| 1000002|   Seoul|      Gwanak-gu| true|             Richway|      119| 37.48208|126.901384|
+| 1000003|   Seoul|        Guro-gu| true| Guro-gu Call Center|       95|37.508163|126.884387|
+| 1000004|   Seoul|   Yangcheon-gu| true|Yangcheon Table T...|       43|37.546061|126.874209|
+| 1000005|   Seoul|      Dobong-gu| true|     Day Care Center|       43|37.679422|127.044374|
+| 1000006|   Seoul|        Guro-gu| true|Manmin Central Ch...|       41|37.481059|126.894343|
+| 1000008|   Seoul|  Dongdaemun-gu| true|       Dongan Church|       17|37.592888|127.056766|
+| 1000010|   Seoul|      Gwanak-gu| true|     Wangsung Church|       30|37.481735|126.930121|
+| 1000011|   Seoul|   Eunpyeong-gu| true|Eunpyeong St. Mar...|       14| 37.63369|  126.9165|
+| 1000012|   Seoul|   Seongdong-gu| true|    Seongdong-gu APT|       13| 37.55713|  127.0403|
+| 1000013|   Seoul|      Jongno-gu| true|Jongno Community ...|       10| 37.57681|   127.006|
+| 1000014|   Seoul|     Gangnam-gu| true|Samsung Medical C...|        7| 37.48825| 127.08559|
+| 1000015|   Seoul|        Jung-gu| true|Jung-gu Fashion C...|        7|37.562405|126.984377|
+| 1000016|   Seoul|   Seodaemun-gu| true|  Yeonana News Class|        5|37.558147|126.943799|
+| 1000017|   Seoul|      Jongno-gu| true|Korea Campus Crus...|        7|37.594782|126.968022|
+| 1000023|   Seoul|        Jung-gu| true|   KB Life Insurance|       13|37.560899|126.966998|
+| 1000024|   Seoul|Yeongdeungpo-gu| true|Yeongdeungpo Lear...|        3|37.520846|126.931278|
+| 1000025|   Seoul|     Gangnam-gu| true|Gangnam Dongin Ch...|        1|37.522331|127.057388|
+| 1000026|   Seoul|   Yangcheon-gu| true|Biblical Language...|        3|37.524623|126.843118|
+| 1000029|   Seoul|     Gangnam-gu| true|Samsung Fire & Ma...|        4|37.498279|127.030139|
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+only showing top 20 rows
+
+>>> case_df.na.fill(value = 0).show()
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+| case_id|province|           city|group|      infection_case|confirmed| latitude| longitude|
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+| 1000001|   Seoul|     Yongsan-gu| true|       Itaewon Clubs|      139|    37.53|    126.99|
+| 1000002|   Seoul|      Gwanak-gu| true|             Richway|      119| 37.48208|126.901384|
+| 1000003|   Seoul|        Guro-gu| true| Guro-gu Call Center|       95|37.508163|126.884387|
+| 1000004|   Seoul|   Yangcheon-gu| true|Yangcheon Table T...|       43|37.546061|126.874209|
+| 1000005|   Seoul|      Dobong-gu| true|     Day Care Center|       43|37.679422|127.044374|
+| 1000006|   Seoul|        Guro-gu| true|Manmin Central Ch...|       41|37.481059|126.894343|
+| 1000007|   Seoul|from other city| true|SMR Newly Planted...|       36|      0.0|       0.0|
+| 1000008|   Seoul|  Dongdaemun-gu| true|       Dongan Church|       17|37.592888|127.056766|
+| 1000009|   Seoul|from other city| true|Coupang Logistics...|       25|      0.0|       0.0|
+| 1000010|   Seoul|      Gwanak-gu| true|     Wangsung Church|       30|37.481735|126.930121|
+| 1000011|   Seoul|   Eunpyeong-gu| true|Eunpyeong St. Mar...|       14| 37.63369|  126.9165|
+| 1000012|   Seoul|   Seongdong-gu| true|    Seongdong-gu APT|       13| 37.55713|  127.0403|
+| 1000013|   Seoul|      Jongno-gu| true|Jongno Community ...|       10| 37.57681|   127.006|
+| 1000014|   Seoul|     Gangnam-gu| true|Samsung Medical C...|        7| 37.48825| 127.08559|
+| 1000015|   Seoul|        Jung-gu| true|Jung-gu Fashion C...|        7|37.562405|126.984377|
+| 1000016|   Seoul|   Seodaemun-gu| true|  Yeonana News Class|        5|37.558147|126.943799|
+| 1000017|   Seoul|      Jongno-gu| true|Korea Campus Crus...|        7|37.594782|126.968022|
+| 1000018|   Seoul|     Gangnam-gu| true|Gangnam Yeoksam-d...|        6|      0.0|       0.0|
+| 1000019|   Seoul|from other city| true|Daejeon door-to-d...|        1|      0.0|       0.0|
+| 1000020|   Seoul|   Geumcheon-gu| true|Geumcheon-gu rice...|        6|      0.0|       0.0|
++--------+--------+---------------+-----+--------------------+---------+---------+----------+
+only showing top 20 rows
+
+>>> case_df.filter((col("province") == "Daegu") & (col("confirmed") > 10)).select("infection_case","confirmed").show()
++--------------------+---------+
+|      infection_case|confirmed|
++--------------------+---------+
+|  Shincheonji Church|     4511|
+|Second Mi-Ju Hosp...|      196|
+|Hansarang Convale...|      124|
+|Daesil Convalesce...|      101|
+|     Fatima Hospital|       39|
+|     overseas inflow|       41|
+|contact with patient|      917|
+|                 etc|      747|
++--------------------+---------+
+
+>>> 
+
+
+
+
