@@ -284,4 +284,10 @@ only showing top 20 rows
 +--------+-----------------+---------------+-----+--------------------+---------+---------+----------+
 only showing top 20 rows
 
-
+def casehighlow(case):
+    x="low"
+    y="high"
+    if len(case) < 50:
+        return x
+    else:
+        return y
