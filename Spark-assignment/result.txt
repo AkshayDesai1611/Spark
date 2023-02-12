@@ -291,3 +291,14 @@ def casehighlow(case):
         return x
     else:
         return y
+        
+>>> casehighlowUDF = udf(lambda z : casehighlow(z) , StringType())
+>>> @udf(returnType=StringType())
+... def casehighlow(case):
+...     x="low"
+...     y="high"
+...     if len(case) < 50:
+...         return x
+...     else:
+...         return y
+... 
